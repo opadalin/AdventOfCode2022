@@ -440,6 +440,12 @@ Temporary Items
 .idea/**/dictionaries
 .idea/**/shelf
 
+.idea/.idea.AdventOfCode/.idea/encodings.xml
+.idea/.idea.AdventOfCode/.idea/indexLayout.xml
+.idea/.idea.AdventOfCode/.idea/sonarlint/
+.idea/.idea.AdventOfCode/.idea/vcs.xml
+
+
 # AWS User-specific
 .idea/**/aws.xml
 
