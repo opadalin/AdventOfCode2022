@@ -21,4 +21,14 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AdventOfCode\AdventOfCode.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Day1\data.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
