@@ -445,13 +445,12 @@ Temporary Items
 .idea/.idea.AdventOfCode/.idea/sonarlint/
 .idea/.idea.AdventOfCode/.idea/vcs.xml
 
-
 # AWS User-specific
 .idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml
-
+.idea/
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
