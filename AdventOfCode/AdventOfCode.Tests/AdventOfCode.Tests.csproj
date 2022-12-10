@@ -2,9 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-
+        <Nullable>disable</Nullable>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -26,16 +24,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Day1\TestData\data.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Day1\Dataset\data.txt" />
-      <EmbeddedResource Include="Day1\Dataset\data.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </EmbeddedResource>
+      <EmbeddedResource Include="InputData\calories.txt" />
+      <EmbeddedResource Include="InputData\RPS-strategy-guide.txt" />
     </ItemGroup>
 
 </Project>

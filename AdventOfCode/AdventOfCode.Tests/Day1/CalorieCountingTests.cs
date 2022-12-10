@@ -15,7 +15,7 @@ public class CalorieCountingTests
     }
 
     [Theory(DisplayName = "Can calculate and display the sum of the elf carrying most calories")]
-    [InlineData("data.txt", 65912)]
+    [InlineData("calories.txt", 65912)]
     public void CanGetTheElfWithTheMostCalorieCount(string dataset, int expected)
     {
         // given
@@ -31,7 +31,7 @@ public class CalorieCountingTests
     }
 
     [Theory(DisplayName = "Can calculate and display the sum of the top three elves carrying most calories")]
-    [InlineData("data.txt", 195625)]
+    [InlineData("calories.txt", 195625)]
     public void CanGetTheTopThreeElvesWithTheMostCalorieCount(string dataset, int expected)
     {
         // given

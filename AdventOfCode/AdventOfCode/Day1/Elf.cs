@@ -1,16 +1,19 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace AdventOfCode.Day1;
 
 public class Elf
 {
-    public List<int> Calories { get; }
+    private readonly List<int> _calories;
 
     public Elf(List<int> calories)
     {
-        Calories = calories;
+        _calories = calories;
     }
 
     public int GetCalories()
     {
-        return Calories.Sum();
+        return _calories.Sum();
     }
 }
