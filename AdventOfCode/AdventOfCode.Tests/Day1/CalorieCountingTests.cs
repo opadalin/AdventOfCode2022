@@ -1,4 +1,5 @@
 using AdventOfCode.Day1;
+using AdventOfCode.Tests.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,19 +14,35 @@ public class CalorieCountingTests
         _outputHelper = outputHelper;
     }
 
-    [Fact]
-    public void CanGetTheElfWithTheMostCalorieCount()
+    [Theory(DisplayName = "Can calculate and display the sum of the elf carrying most calories")]
+    [InlineData("data.txt", 65912)]
+    public void CanGetTheElfWithTheMostCalorieCount(string dataset, int expected)
     {
-        var calorieCounting = new CalorieCounting();
-        var most = calorieCounting.GetCalorieCountForTheElfCarryingMost();
-        _outputHelper.WriteLine($"Elf with the most calories has {most} calories");
+        // given
+        var data = FileReader.ReadResource(dataset);
+        var calorieCounting = new CalorieCounting(data);
+        
+        // when
+        var actual = calorieCounting.GetCalorieCountForTheElfCarryingMost();
+        
+        // then
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"The elf with the most calories has {actual} calories");
     }
 
-    [Fact]
-    public void CanGetTheTopThreeElvesWithTheMostCalorieCount()
+    [Theory(DisplayName = "Can calculate and display the sum of the top three elves carrying most calories")]
+    [InlineData("data.txt", 195625)]
+    public void CanGetTheTopThreeElvesWithTheMostCalorieCount(string dataset, int expected)
     {
-        var calorieCounting = new CalorieCounting();
-        var topThree = calorieCounting.GetCalorieCountForTopThreeElvesCarryingMost();
-        _outputHelper.WriteLine($"Top three elves carries {topThree} calories");
+        // given
+        var data = FileReader.ReadResource(dataset);
+        var calorieCounting = new CalorieCounting(data);
+        
+        // when
+        var actual = calorieCounting.GetCalorieCountForTopThreeElvesCarryingMost();
+        
+        // then
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"The top three elves carries {actual} calories together");
     }
 }

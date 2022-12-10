@@ -26,9 +26,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Day1\data.txt">
+      <None Update="Day1\TestData\data.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Day1\Dataset\data.txt" />
+      <EmbeddedResource Include="Day1\Dataset\data.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

@@ -40,27 +40,25 @@
 
 public class CalorieCounting
 {
-    public List<Elf> Elves { get; }
-    public CalorieCounting()
+    private readonly List<Elf> _elves;
+    
+    public CalorieCounting(string inputData)
     {
-        Elves = new List<Elf>();
-        var currentDir = Directory.GetCurrentDirectory();
-        var input = File.ReadAllText($"/Users/lindis/repo/op/AdventOfCode/AdventOfCode/AdventOfCode.Tests/Day1/data.txt");
-        var data = input.Split(Environment.NewLine);
+        _elves = new List<Elf>();
+        var calorieList = inputData.Split(Environment.NewLine);
         
         var calories = new List<int>();
-        foreach (var s in data)
+        foreach (var calorieCount in calorieList)
         {
-            
-            if (int.TryParse(s, out var value))
+            if (int.TryParse(calorieCount, out var calorie))
             {
-                calories.Add(value);
+                calories.Add(calorie);
             }
             
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(calorieCount))
             {
                 var elf = new Elf(calories);
-                Elves.Add(elf);
+                _elves.Add(elf);
                 calories = new List<int>();
             }
         }
@@ -68,27 +66,12 @@ public class CalorieCounting
 
     public int GetCalorieCountForTheElfCarryingMost()
     {
-        return Elves.MaxBy(elf => elf.GetCalories())!.GetCalories();
+        return _elves.MaxBy(elf => elf.GetCalories())!.GetCalories();
     }
     
     public int GetCalorieCountForTopThreeElvesCarryingMost()
     {
-        var calorieCountForTopThreeElvesCarryingMost = Elves.OrderByDescending(elf => elf.GetCalories())!.Take(3);
+        var calorieCountForTopThreeElvesCarryingMost = _elves.OrderByDescending(elf => elf.GetCalories()).Take(3);
         return  calorieCountForTopThreeElvesCarryingMost.Sum(x => x.GetCalories());
-    }
-}
-
-public class Elf
-{
-    public List<int> Calories { get; }
-
-    public Elf(List<int> calories)
-    {
-        Calories = calories;
-    }
-
-    public int GetCalories()
-    {
-        return Calories.Sum();
     }
 }
