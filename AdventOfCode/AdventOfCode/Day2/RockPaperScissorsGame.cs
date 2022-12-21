@@ -6,30 +6,24 @@ namespace AdventOfCode.Day2;
 
 public class RockPaperScissorsGame
 {
-    private readonly List<Round> _rounds;
+    private readonly IEnumerable<InputData> _inputData;
+    private readonly IPlayingStrategy _playingStrategy;
 
-    public RockPaperScissorsGame(string data)
+    public RockPaperScissorsGame(string data, IPlayingStrategy playingStrategy)
     {
-        _rounds = new List<Round>();
+        ArgumentNullException.ThrowIfNull(data);
+        ArgumentNullException.ThrowIfNull(playingStrategy);
 
-        var rounds = data
+        _playingStrategy = playingStrategy;
+
+        _inputData = data
             .Split($"{Environment.NewLine}")
-            .Select(round => (round.Split(' ')[0], round.Split(' ')[1]));
-
-        foreach (var (selection1, selection2) in rounds)
-        {
-            var opponent = new Elf("Bob");
-            var me = new Elf("opadalin");
-            opponent.Choose(selection1);
-            me.Choose(selection2);
-            var round = new Round(opponent, me);
-            round.PlayRound();
-            _rounds.Add(round);
-        }
+            .Select(round => new InputData(round.Split(' ')[0], round.Split(' ')[1]));
     }
 
-    public int CalculateScoreForMe()
+    public int Play()
     {
-        return _rounds.Sum(round => round.Me.Score);
+        var rounds = _playingStrategy.PlayRounds(_inputData);
+        return rounds.Sum(round => round.Contestant2.Score);
     }
 }
