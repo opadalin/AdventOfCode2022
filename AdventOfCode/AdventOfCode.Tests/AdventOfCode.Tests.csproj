@@ -28,4 +28,8 @@
       <EmbeddedResource Include="InputData\RPS-strategy-guide.txt" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Day3" />
+    </ItemGroup>
+
 </Project>

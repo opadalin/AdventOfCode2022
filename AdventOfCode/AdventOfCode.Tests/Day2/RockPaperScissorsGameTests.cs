@@ -22,7 +22,7 @@ public class RockPaperScissorsGameTests
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
 
-        var sut = new RockPaperScissorsGame(data, new WinningStrategy());
+        var sut = new RockPaperScissorsGame(data, new Part1Strategy());
 
         // when
         var score = sut.Play();
@@ -40,7 +40,7 @@ public class RockPaperScissorsGameTests
     {
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
-        var sut = new RockPaperScissorsGame(data, new FollowInstructionsStrategy());
+        var sut = new RockPaperScissorsGame(data, new Part2Strategy());
 
         // when
         var score = sut.Play();

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Day2;
 
-public class FollowInstructionsStrategy : IPlayingStrategy
+public class Part1Strategy : IPlayingStrategy
 {
     public IEnumerable<Round> PlayRounds(IEnumerable<InputData> inputData)
     {
@@ -11,13 +11,8 @@ public class FollowInstructionsStrategy : IPlayingStrategy
         {
             var opponent = new Elf("Bob");
             var me = new Elf("opadalin");
-            var opponentsSelection = new Selection(data.Input1);
-            opponent.Choose(opponentsSelection);
-
-            var howTheRoundNeedsToEnd = new HowTheRoundNeedsToEnd(data.Input2, opponentsSelection);
-            var correctSelection = howTheRoundNeedsToEnd.PickCorrectSelection();
-
-            me.Choose(correctSelection);
+            opponent.Choose(new Selection(data.Input1));
+            me.Choose(new Selection(data.Input2));
             var round = new Round(opponent, me);
             round.PlayRound();
             rounds.Add(round);
