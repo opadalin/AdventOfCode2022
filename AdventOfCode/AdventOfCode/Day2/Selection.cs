@@ -10,8 +10,16 @@ public class Selection
     {
         AssertValidInput(inputString);
 
-        var option = ToOption(inputString);
-        Option = option;
+        Option = inputString.ToUpperInvariant() switch
+        {
+            "A" => Option.Rock,
+            "X" => Option.Rock,
+            "B" => Option.Paper,
+            "Y" => Option.Paper,
+            "C" => Option.Scissors,
+            "Z" => Option.Scissors,
+            _ => throw new ArgumentOutOfRangeException(nameof(inputString))
+        };
     }
 
     public Selection(Option option)
@@ -36,20 +44,6 @@ public class Selection
     public bool IsDraw(Selection other)
     {
         return Option == other.Option;
-    }
-
-    private static Option ToOption(string inputString)
-    {
-        return inputString.ToUpperInvariant() switch
-        {
-            "A" => Option.Rock,
-            "X" => Option.Rock,
-            "B" => Option.Paper,
-            "Y" => Option.Paper,
-            "C" => Option.Scissors,
-            "Z" => Option.Scissors,
-            _ => throw new ArgumentOutOfRangeException(nameof(inputString))
-        };
     }
 
     private static void AssertValidInput(string inputString)

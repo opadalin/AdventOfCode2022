@@ -11,11 +11,14 @@ public class HowTheRoundNeedsToEnd
         new Selection(Option.Paper),
         new Selection(Option.Scissors));
 
+    private readonly Outcome _outcome;
+    private readonly Selection _opponentsSelection;
+
     public HowTheRoundNeedsToEnd(string inputString, Selection opponentsSelection)
     {
         AssertValidInput(inputString);
 
-        Outcome = inputString.ToUpperInvariant() switch
+        _outcome = inputString.ToUpperInvariant() switch
         {
             "X" => Outcome.Defeat,
             "Y" => Outcome.Draw,
@@ -24,33 +27,21 @@ public class HowTheRoundNeedsToEnd
         };
 
         ArgumentNullException.ThrowIfNull(opponentsSelection);
-        OpponentsSelection = opponentsSelection;
+        _opponentsSelection = opponentsSelection;
     }
-
 
     public Selection PickCorrectSelection()
     {
-        switch (Outcome)
+        return _outcome switch
         {
-            case Outcome.Draw:
-                return OpponentsSelection;
-            case Outcome.Defeat:
-            {
-                var losingSelection = _selections.FirstOrDefault(s => !s.Beats(OpponentsSelection));
-                return losingSelection;
-            }
-            case Outcome.Victory:
-            {
-                var winningSelection = _selections.FirstOrDefault(s => s.Beats(OpponentsSelection));
-                return winningSelection;
-            }
-            default:
-                throw new ArgumentOutOfRangeException(Outcome.ToString());
-        }
+            Outcome.Draw => _opponentsSelection,
+            Outcome.Defeat => _selections.FirstOrDefault(s =>
+                !s.Beats(_opponentsSelection) && !s.IsDraw(_opponentsSelection)),
+            Outcome.Victory => _selections.FirstOrDefault(s =>
+                s.Beats(_opponentsSelection) && !s.IsDraw(_opponentsSelection)),
+            _ => throw new ArgumentOutOfRangeException(_outcome.ToString())
+        };
     }
-
-    public Outcome Outcome { get; }
-    public Selection OpponentsSelection { get; }
 
     private static void AssertValidInput(string inputString)
     {

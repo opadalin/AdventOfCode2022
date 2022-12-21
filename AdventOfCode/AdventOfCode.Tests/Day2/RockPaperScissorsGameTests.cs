@@ -14,7 +14,7 @@ public class RockPaperScissorsGameTests
         _outputHelper = outputHelper;
     }
 
-    [Theory(DisplayName = "Calculate total score")]
+    [Theory(DisplayName = "Calculate total score using winning strategy")]
     [InlineData("RPS-strategy-guide.txt", 12679, true)]
     [InlineData("A Y\nB X\nC Z", 15, false)]
     public void CanCalculateTotalScore(string inputData, int expected, bool readFromFile)
@@ -32,9 +32,10 @@ public class RockPaperScissorsGameTests
         _outputHelper.WriteLine($"My total score is {score}");
     }
 
-    [Theory(DisplayName = "Calculate total score example input part 2")]
-    [InlineData("RPS-strategy-guide.txt", 14777, true)]
+    [Theory(DisplayName = "Calculate total score following instructions strategy")]
+    [InlineData("RPS-strategy-guide.txt", 14470, true)]
     [InlineData("A Y\nB X\nC Z", 12, false)]
+    [InlineData("A Y\nB X\nC Z\nA Y\nB X\nC Z", 24, false)]
     public void CanCalculateTotalScoreExampleInputPart2(string inputData, int expected, bool readFromFile)
     {
         // given
