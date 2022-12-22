@@ -37,4 +37,27 @@ public class PriorityServiceTests
         Assert.Equal(expected, priorityScore);
         _outputHelper.WriteLine($"Total priority score is {priorityScore}");
     }
+
+    [Theory(DisplayName = "Get group badge priority score")]
+    [InlineData("rucksack.txt", 2587, true)]
+    [InlineData("vJrwpWtwJgWrhcsFMMfFFhFp\n" +
+                "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n" +
+                "PmmdzqPrVvPwwTWBwg\n" +
+                "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n" +
+                "ttgJtRGJQctTZtZT\n" +
+                "CrZsJsPPZsGzwwsLwLmpwMDw", 70, false)]
+    public void CanGetGroupBadePriorityScore(string inputData, int expected, bool readFromFile)
+    {
+        // given
+        var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
+
+        var sut = new PriorityService(data);
+
+        // when
+        var priorityScore = sut.GetGroupBadgePriorityScore();
+
+        // then
+        Assert.Equal(expected, priorityScore);
+        _outputHelper.WriteLine($"Total priority score is {priorityScore}");
+    }
 }

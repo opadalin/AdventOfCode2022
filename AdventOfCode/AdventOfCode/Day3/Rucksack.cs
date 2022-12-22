@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Day3;
@@ -18,4 +19,6 @@ public class Rucksack
     }
 
     public Item GetIntersection() => First.Items.Intersect(Second.Items).SingleOrDefault();
+
+    public IEnumerable<Item> GetAllItems => First.Items.Concat(Second.Items);
 }
