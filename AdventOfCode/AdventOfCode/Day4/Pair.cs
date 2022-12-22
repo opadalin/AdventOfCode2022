@@ -25,4 +25,9 @@ public class Pair
         return _assignmentsForFirstElf.IsSubsetOf(_assignmentsForSecondElf) ||
                _assignmentsForSecondElf.IsSubsetOf(_assignmentsForFirstElf);
     }
+    
+    public bool HasAnyOverlappingAssignments()
+    {
+        return _assignmentsForFirstElf.Overlaps(_assignmentsForSecondElf);
+    }
 }
