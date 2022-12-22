@@ -25,10 +25,11 @@ public class CampCleanupTest
         var sut = new CampCleanupService(data);
 
         // when
-        var pairs = sut.GetTotalNumberOfOverlappingAssignments();
+        var totalNumberOfPairsWithOverlappingAssignments = sut.GetTotalNumberOfPairsWithOverlappingAssignments();
 
         // then
-        Assert.Equal(expected, pairs);
-        _outputHelper.WriteLine($"Total number of pairs are {pairs}");
+        Assert.Equal(expected, totalNumberOfPairsWithOverlappingAssignments);
+        _outputHelper.WriteLine("Total number of pairs with fully overlapping assignments are " +
+                                $"{totalNumberOfPairsWithOverlappingAssignments}");
     }
 }

@@ -26,7 +26,7 @@ public class CampCleanupService
             .ToList();
     }
 
-    public int GetTotalNumberOfOverlappingAssignments()
+    public int GetTotalNumberOfPairsWithOverlappingAssignments()
     {
         return _pairs.Count(pair => pair.HasFullyOverlappingAssignments());
     }
