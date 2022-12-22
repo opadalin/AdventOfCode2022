@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace AdventOfCode.Day3;
 
-public class PriorityService
+public class RucksackReorganizationService
 {
     private readonly string _inputData;
 
-    public PriorityService(string inputData)
+    public RucksackReorganizationService(string inputData)
     {
         if (string.IsNullOrWhiteSpace(inputData))
         {

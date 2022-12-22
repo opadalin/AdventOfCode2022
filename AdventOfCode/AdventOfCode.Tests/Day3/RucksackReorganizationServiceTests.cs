@@ -5,11 +5,11 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode.Tests.Day3;
 
-public class PriorityServiceTests
+public class RucksackReorganizationServiceTests
 {
     private readonly ITestOutputHelper _outputHelper;
 
-    public PriorityServiceTests(ITestOutputHelper outputHelper)
+    public RucksackReorganizationServiceTests(ITestOutputHelper outputHelper)
     {
         _outputHelper = outputHelper;
     }
@@ -28,7 +28,7 @@ public class PriorityServiceTests
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
 
-        var sut = new PriorityService(data);
+        var sut = new RucksackReorganizationService(data);
 
         // when
         var priorityScore = sut.GetPriorityScore();
@@ -51,7 +51,7 @@ public class PriorityServiceTests
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
 
-        var sut = new PriorityService(data);
+        var sut = new RucksackReorganizationService(data);
 
         // when
         var priorityScore = sut.GetGroupBadgePriorityScore();
