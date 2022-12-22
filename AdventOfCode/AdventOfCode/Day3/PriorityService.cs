@@ -51,9 +51,9 @@ public class PriorityService
         var rucksack1 = group[0];
         var rucksack2 = group[1];
         var rucksack3 = group[2];
-        return rucksack1.GetAllItems
-            .Intersect(rucksack2.GetAllItems)
-            .Intersect(rucksack3.GetAllItems)
+        return rucksack1.AllItems
+            .Intersect(rucksack2.AllItems)
+            .Intersect(rucksack3.AllItems)
             .FirstOrDefault();
     }
 

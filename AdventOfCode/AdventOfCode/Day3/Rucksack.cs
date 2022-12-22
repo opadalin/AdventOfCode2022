@@ -20,5 +20,5 @@ public class Rucksack
 
     public Item GetIntersection() => First.Items.Intersect(Second.Items).SingleOrDefault();
 
-    public IEnumerable<Item> GetAllItems => First.Items.Concat(Second.Items);
+    public IEnumerable<Item> AllItems => First.Items.Concat(Second.Items);
 }
