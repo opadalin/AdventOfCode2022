@@ -18,7 +18,7 @@ public class HowTheRoundNeedsToEnd
     {
         AssertValidInput(inputString);
 
-        _outcome = inputString.ToUpperInvariant() switch
+        _outcome = inputString switch
         {
             "X" => Outcome.Defeat,
             "Y" => Outcome.Draw,
@@ -50,9 +50,9 @@ public class HowTheRoundNeedsToEnd
             throw new ArgumentNullException(nameof(inputString));
         }
 
-        if (!string.Equals(inputString, "X", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "Y", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "Z", StringComparison.OrdinalIgnoreCase))
+        if (!inputString.Equals("X")
+            && !string.Equals(inputString, "Y")
+            && !string.Equals(inputString, "Z"))
         {
             throw new ArgumentException($"{inputString} is not a valid value");
         }

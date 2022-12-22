@@ -10,7 +10,7 @@ public class Selection
     {
         AssertValidInput(inputString);
 
-        Option = inputString.ToUpperInvariant() switch
+        Option = inputString switch
         {
             "A" => Option.Rock,
             "X" => Option.Rock,
@@ -35,7 +35,6 @@ public class Selection
             case Option.Scissors when other.Option == Option.Paper:
             case Option.Paper when other.Option == Option.Rock:
                 return true;
-            case Option.None:
             default:
                 return false;
         }
@@ -53,12 +52,12 @@ public class Selection
             throw new ArgumentNullException(nameof(inputString));
         }
 
-        if (!string.Equals(inputString, "X", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "Y", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "Z", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "A", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "B", StringComparison.OrdinalIgnoreCase)
-            && !string.Equals(inputString, "C", StringComparison.OrdinalIgnoreCase))
+        if (!inputString.Equals("X")
+            && !inputString.Equals("Y")
+            && !inputString.Equals("Z")
+            && !inputString.Equals("A")
+            && !inputString.Equals("B")
+            && !inputString.Equals("C"))
         {
             throw new ArgumentException($"{inputString} is not a valid value");
         }

@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace AdventOfCode.Day1;
 
-public class Elf
+public class Food
 {
     private readonly List<int> _calories;
 
-    public Elf(List<int> calories)
+    public Food(List<int> calories)
     {
         _calories = calories;
     }
 
-    public int GetCalories()
+    public int GetTotalCalorieCount()
     {
         return _calories.Sum();
     }

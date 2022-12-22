@@ -1,26 +1,35 @@
+using System;
 using System.Collections.Generic;
 
 namespace AdventOfCode.Day2;
 
-public class Part2Strategy : IPlayingStrategy
+public class Part2Strategy : PlayingStrategy
 {
-    public IEnumerable<Round> PlayRounds(IEnumerable<InputData> inputData)
+    private readonly IEnumerable<InputData> _inputData;
+
+    public Part2Strategy(string inputData)
+    {
+        if (string.IsNullOrEmpty(inputData))
+        {
+            throw new ArgumentNullException(nameof(inputData));
+        }
+
+        _inputData = ExtractInputData(inputData);
+    }
+
+    public override IEnumerable<Round> Play()
     {
         var rounds = new List<Round>();
-        foreach (var data in inputData)
+        foreach (var data in _inputData)
         {
-            var opponent = new Elf("Bob");
-            var me = new Elf("opadalin");
             var opponentsSelection = new Selection(data.Input1);
-            opponent.Choose(opponentsSelection);
+            var opponent = new Elf(opponentsSelection);
 
             var howTheRoundNeedsToEnd = new HowTheRoundNeedsToEnd(data.Input2, opponentsSelection);
             var correctSelection = howTheRoundNeedsToEnd.PickCorrectSelection();
 
-            me.Choose(correctSelection);
-            var round = new Round(opponent, me);
-            round.PlayRound();
-            rounds.Add(round);
+            var me = new Elf(correctSelection);
+            rounds.Add(Round.Setup(opponent, me).Play());
         }
 
         return rounds;

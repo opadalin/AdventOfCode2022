@@ -28,13 +28,11 @@ public class CampCleanupTest
         var sut = new CampCleanupService(data);
 
         // when
-        var totalNumberOfPairsWithFullyOverlappingAssignments =
-            sut.GetTotalNumberOfPairsWithFullyOverlappingAssignments();
+        var actual = sut.GetTotalNumberOfPairsWithFullyOverlappingAssignments();
 
         // then
-        Assert.Equal(expected, totalNumberOfPairsWithFullyOverlappingAssignments);
-        _outputHelper.WriteLine("Total number of pairs with fully overlapping assignments are " +
-                                $"{totalNumberOfPairsWithFullyOverlappingAssignments}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"Total number of pairs with fully overlapping assignments are {actual}");
     }
 
     [Theory(DisplayName = "Get total number of pairs with any overlapping assignments")]
@@ -48,11 +46,10 @@ public class CampCleanupTest
         var sut = new CampCleanupService(data);
 
         // when
-        var totalNumberOfPairsWithAnyOverlappingAssignments = sut.GetTotalNumberOfPairsWithAnyOverlappingAssignments();
+        var actual = sut.GetTotalNumberOfPairsWithAnyOverlappingAssignments();
 
         // then
-        Assert.Equal(expected, totalNumberOfPairsWithAnyOverlappingAssignments);
-        _outputHelper.WriteLine("Total number of pairs with any overlapping assignments are " +
-                                $"{totalNumberOfPairsWithAnyOverlappingAssignments}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"Total number of pairs with any overlapping assignments are {actual}");
     }
 }

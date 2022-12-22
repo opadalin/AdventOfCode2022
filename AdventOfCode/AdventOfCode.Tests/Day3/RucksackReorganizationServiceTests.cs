@@ -31,11 +31,11 @@ public class RucksackReorganizationServiceTests
         var sut = new RucksackReorganizationService(data);
 
         // when
-        var priorityScore = sut.GetPriorityScore();
+        var actual = sut.GetPriorityScore();
 
         // then
-        Assert.Equal(expected, priorityScore);
-        _outputHelper.WriteLine($"Total priority score is {priorityScore}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"Total priority score is {actual}");
     }
 
     [Theory(DisplayName = "Get group badge priority score")]
@@ -54,10 +54,10 @@ public class RucksackReorganizationServiceTests
         var sut = new RucksackReorganizationService(data);
 
         // when
-        var priorityScore = sut.GetGroupBadgePriorityScore();
+        var actual = sut.GetGroupBadgePriorityScore();
 
         // then
-        Assert.Equal(expected, priorityScore);
-        _outputHelper.WriteLine($"Total priority score is {priorityScore}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"Total priority score is {actual}");
     }
 }

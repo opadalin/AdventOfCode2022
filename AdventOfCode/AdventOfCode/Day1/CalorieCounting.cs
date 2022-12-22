@@ -6,38 +6,23 @@ namespace AdventOfCode.Day1;
 
 public class CalorieCounting
 {
-    private readonly List<Elf> _elves;
-    
-    public CalorieCounting(string inputData)
+    private readonly List<Food> _food;
+
+    public CalorieCounting(List<Food> food)
     {
-        _elves = new List<Elf>();
-        var calorieList = inputData.Split(Environment.NewLine);
-        
-        var calories = new List<int>();
-        foreach (var calorieCount in calorieList)
-        {
-            if (int.TryParse(calorieCount, out var calorie))
-            {
-                calories.Add(calorie);
-            }
-            
-            if (string.IsNullOrEmpty(calorieCount))
-            {
-                var elf = new Elf(calories);
-                _elves.Add(elf);
-                calories = new List<int>();
-            }
-        }
+        ArgumentNullException.ThrowIfNull(food);
+        _food = food;
     }
 
     public int GetCalorieCountForTheElfCarryingMost()
     {
-        return _elves.MaxBy(elf => elf.GetCalories())!.GetCalories();
+        return _food.MaxBy(elf => elf.GetTotalCalorieCount()).GetTotalCalorieCount();
     }
-    
+
     public int GetCalorieCountForTopThreeElvesCarryingMost()
     {
-        var calorieCountForTopThreeElvesCarryingMost = _elves.OrderByDescending(elf => elf.GetCalories()).Take(3);
-        return  calorieCountForTopThreeElvesCarryingMost.Sum(x => x.GetCalories());
+        var calorieCountForTopThreeElvesCarryingMost =
+            _food.OrderByDescending(elf => elf.GetTotalCalorieCount()).Take(3);
+        return calorieCountForTopThreeElvesCarryingMost.Sum(x => x.GetTotalCalorieCount());
     }
 }

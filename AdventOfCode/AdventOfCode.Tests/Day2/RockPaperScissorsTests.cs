@@ -5,11 +5,11 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode.Tests.Day2;
 
-public class RockPaperScissorsGameTests
+public class RockPaperScissorsTests
 {
     private readonly ITestOutputHelper _outputHelper;
 
-    public RockPaperScissorsGameTests(ITestOutputHelper outputHelper)
+    public RockPaperScissorsTests(ITestOutputHelper outputHelper)
     {
         _outputHelper = outputHelper;
     }
@@ -22,14 +22,15 @@ public class RockPaperScissorsGameTests
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
 
-        var sut = new RockPaperScissorsGame(data, new Part1Strategy());
+        var strategy = new Part1Strategy(data);
+        var sut = new RockPaperScissors(strategy);
 
         // when
-        var score = sut.Play();
+        var actual = sut.Play();
 
         // then
-        Assert.Equal(expected, score);
-        _outputHelper.WriteLine($"My total score is {score}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"My total score is {actual}");
     }
 
     [Theory(DisplayName = "Calculate total score following instructions strategy")]
@@ -40,13 +41,15 @@ public class RockPaperScissorsGameTests
     {
         // given
         var data = readFromFile ? FileReader.ReadResource(inputData) : inputData;
-        var sut = new RockPaperScissorsGame(data, new Part2Strategy());
+
+        var strategy = new Part2Strategy(data);
+        var sut = new RockPaperScissors(strategy);
 
         // when
-        var score = sut.Play();
+        var actual = sut.Play();
 
         // then
-        Assert.Equal(expected, score);
-        _outputHelper.WriteLine($"My total score is {score}");
+        Assert.Equal(expected, actual);
+        _outputHelper.WriteLine($"My total score is {actual}");
     }
 }
