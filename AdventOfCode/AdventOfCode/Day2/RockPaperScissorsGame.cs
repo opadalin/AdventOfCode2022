@@ -17,7 +17,7 @@ public class RockPaperScissorsGame
         _playingStrategy = playingStrategy;
 
         _inputData = data
-            .Split($"{Environment.NewLine}")
+            .Split(Environment.NewLine)
             .Select(round => new InputData(round.Split(' ')[0], round.Split(' ')[1]));
     }
 

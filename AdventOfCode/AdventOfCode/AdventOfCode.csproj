@@ -4,8 +4,4 @@
         <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Day3" />
-    </ItemGroup>
-
 </Project>
