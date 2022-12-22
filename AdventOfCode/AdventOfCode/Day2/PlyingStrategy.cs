@@ -16,4 +16,16 @@ public abstract class PlayingStrategy
     }
 }
 
-public record InputData(string Input1, string Input2);
+public class InputData
+{
+    public InputData(string input1, string input2)
+    {
+        ArgumentNullException.ThrowIfNull(input1);
+        ArgumentNullException.ThrowIfNull(input2);
+        Input1 = input1;
+        Input2 = input2;
+    }
+
+    public string Input1 { get; }
+    public string Input2 { get; }
+}

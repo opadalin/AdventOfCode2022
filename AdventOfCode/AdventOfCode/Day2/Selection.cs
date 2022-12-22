@@ -1,26 +1,8 @@
-using System;
-
 namespace AdventOfCode.Day2;
 
 public class Selection
 {
     public Option Option { get; }
-
-    public Selection(string inputString)
-    {
-        AssertValidInput(inputString);
-
-        Option = inputString switch
-        {
-            "A" => Option.Rock,
-            "X" => Option.Rock,
-            "B" => Option.Paper,
-            "Y" => Option.Paper,
-            "C" => Option.Scissors,
-            "Z" => Option.Scissors,
-            _ => throw new ArgumentOutOfRangeException(nameof(inputString))
-        };
-    }
 
     public Selection(Option option)
     {
@@ -43,24 +25,6 @@ public class Selection
     public bool IsDraw(Selection other)
     {
         return Option == other.Option;
-    }
-
-    private static void AssertValidInput(string inputString)
-    {
-        if (string.IsNullOrWhiteSpace(inputString))
-        {
-            throw new ArgumentNullException(nameof(inputString));
-        }
-
-        if (!inputString.Equals("X")
-            && !inputString.Equals("Y")
-            && !inputString.Equals("Z")
-            && !inputString.Equals("A")
-            && !inputString.Equals("B")
-            && !inputString.Equals("C"))
-        {
-            throw new ArgumentException($"{inputString} is not a valid value");
-        }
     }
 
     public override string ToString()
