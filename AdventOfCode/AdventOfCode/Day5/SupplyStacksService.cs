@@ -26,7 +26,7 @@ public class SupplyStacksService
 
         foreach (var crates in cargo.Values)
         {
-            var crate = crates.Pop();
+            var crate = crates.Peek();
             sb.Append(crate);
         }
 
