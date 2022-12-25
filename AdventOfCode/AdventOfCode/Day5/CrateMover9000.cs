@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Day5;
 
-public class CrateMover9000 : Crane
+public class CrateMover9000 : ICrane
 {
     private readonly IDictionary<int, Stack<Crate>> _cargo;
     private readonly IEnumerable<RearrangementProcedure> _rearrangementProcedures;
@@ -19,7 +19,7 @@ public class CrateMover9000 : Crane
         _rearrangementProcedures = rearrangementProcedures;
     }
 
-    public override IDictionary<int, Stack<Crate>> Move()
+    public IDictionary<int, Stack<Crate>> Move()
     {
         foreach (var rearrangementProcedure in _rearrangementProcedures)
         {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode.Day5;
 
-public class CrateMover9001 : Crane
+public class CrateMover9001 : ICrane
 {
     private readonly IDictionary<int, Stack<Crate>> _cargo;
     private readonly IEnumerable<RearrangementProcedure> _rearrangementProcedures;
@@ -20,7 +20,7 @@ public class CrateMover9001 : Crane
         _rearrangementProcedures = rearrangementProcedures;
     }
 
-    public override IDictionary<int, Stack<Crate>> Move()
+    public IDictionary<int, Stack<Crate>> Move()
     {
         foreach (var rearrangementProcedure in _rearrangementProcedures)
         {

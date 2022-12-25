@@ -1,3 +1,5 @@
+using System;
+
 namespace AdventOfCode.Day5;
 
 public class Crate
@@ -6,6 +8,11 @@ public class Crate
 
     public Crate(string value)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
         _value = value;
     }
 
