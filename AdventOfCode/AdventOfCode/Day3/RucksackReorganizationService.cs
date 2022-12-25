@@ -61,7 +61,7 @@ public class RucksackReorganizationService
     {
         var completeInventory = inputData.Split(Environment.NewLine);
 
-        return completeInventory.Select(GetRucksack).ToList();
+        return completeInventory.Select(GetRucksack);
     }
 
     private static Rucksack GetRucksack(string inventory)

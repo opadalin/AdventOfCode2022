@@ -1,13 +1,20 @@
+using System;
+
 namespace AdventOfCode.Day5;
 
 public class SupplyStacksService
 {
-    public SupplyStacksService(string inputData)
+    private readonly Crane _crane;
+
+    public SupplyStacksService(Crane crane)
     {
+        ArgumentNullException.ThrowIfNull(crane);
+        _crane = crane;
     }
 
-    public string Bar()
+    public string RearrangeCrates()
     {
-        return "CMZ";
+        var cargo = _crane.Move();
+        return _crane.GetTopCratesInCargo(cargo);
     }
 }
