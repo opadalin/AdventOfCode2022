@@ -17,12 +17,12 @@ public class TuningService
 
     public int DetectMarker(int chunkSize)
     {
-        var begin = 0;
+        var chunkStartIndex = 0;
         for (var currentMarker = chunkSize; currentMarker < _markers.Length - 1; currentMarker++)
         {
-            if (HasDuplicateMarkers(begin, currentMarker))
+            if (HasDuplicateMarkers(chunkStartIndex, currentMarker))
             {
-                begin++;
+                chunkStartIndex++;
             }
             else
             {
@@ -33,8 +33,8 @@ public class TuningService
         return -1;
     }
 
-    private bool HasDuplicateMarkers(int index, int marker)
+    private bool HasDuplicateMarkers(int chunkStartIndex, int marker)
     {
-        return _markers[index..marker].GroupBy(x => x).Any(g => g.Count() > 1);
+        return _markers[chunkStartIndex..marker].GroupBy(x => x).Any(g => g.Count() > 1);
     }
 }
