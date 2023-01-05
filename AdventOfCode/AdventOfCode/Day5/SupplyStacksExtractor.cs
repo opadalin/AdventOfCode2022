@@ -16,7 +16,7 @@ public class SupplyStacksExtractor
             throw new ArgumentNullException(nameof(inputData));
         }
 
-        var dataSets = inputData.Split("\n\n");
+        var dataSets = inputData.Split($"{Environment.NewLine}{Environment.NewLine}");
         _cargoData = GetCargoData(dataSets);
         _rearrangementProcedureData = GetRearrangementProcedureData(dataSets);
     }
@@ -69,12 +69,12 @@ public class SupplyStacksExtractor
 
     private static IEnumerable<string> GetRearrangementProcedureData(IEnumerable<string> dataSets)
     {
-        return dataSets.Last().Split("\n");
+        return dataSets.Last().Split(Environment.NewLine);
     }
 
     private static IEnumerable<string> GetCargoData(IEnumerable<string> dataSets)
     {
-        var crateData = dataSets.First().Split("\n");
+        var crateData = dataSets.First().Split(Environment.NewLine);
         crateData = crateData.Take(crateData.Length - 1).ToArray();
         return crateData;
     }
