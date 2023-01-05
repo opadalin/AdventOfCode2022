@@ -29,7 +29,7 @@ public class File : Node
         return fileType;
     }
 
-    public virtual string ToString()
+    public override string ToString()
     {
         return $"Kind: {_fileType}, Name: {Name}, Size: {GetSize()}";
     }

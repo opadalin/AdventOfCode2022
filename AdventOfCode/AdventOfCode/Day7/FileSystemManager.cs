@@ -14,6 +14,10 @@ public class FileSystemManager
     private const string RootName = "/";
     private const string MoveUpDirectoryCommand = "..";
 
+    public long TotalUsedSpace => _rootDirectory.GetSize();
+    private long UnusedSpace => 70000000L - TotalUsedSpace;
+    private long MinimumSpaceToDelete => 30000000L - UnusedSpace;
+
     private Directory _rootDirectory;
 
     public void PopulateDirectories(string inputData)
@@ -24,8 +28,7 @@ public class FileSystemManager
         {
             var output = Normalize(terminalOutput);
 
-
-            currentDirectory = CurrentDirectory(output, currentDirectory);
+            ChangeDirectory(output, ref currentDirectory);
 
             if (!output.StartsWith(ListCommand))
             {
@@ -50,7 +53,7 @@ public class FileSystemManager
         }
     }
 
-    private Directory CurrentDirectory(string output, Directory currentDirectory)
+    private void ChangeDirectory(string output, ref Directory currentDirectory)
     {
         if (output.EndsWith(RootName))
         {
@@ -62,7 +65,7 @@ public class FileSystemManager
 
         if (!output.StartsWith(ChangeDirectoryCommand))
         {
-            return currentDirectory;
+            return;
         }
 
         var directoryToChangeTo = output.Split(" ").Last();
@@ -75,8 +78,6 @@ public class FileSystemManager
         {
             currentDirectory = node as Directory;
         }
-
-        return currentDirectory;
     }
 
     private static File GetFile(string name)
@@ -104,19 +105,40 @@ public class FileSystemManager
     {
         var sum = 0L;
 
-        Directory.Traverse(_rootDirectory, x => sum += Calculate(x));
+        Directory.Traverse(_rootDirectory, directory => sum += GetSizeForDirectoriesBelow100000InSize(directory));
 
         return sum;
     }
 
-    private static long Calculate(Node node)
+
+    private static long GetSizeForDirectoriesBelow100000InSize(Directory directory)
     {
         var sum = 0L;
-        if (node is Directory {IsAtMost100000InSize: true})
+        if (directory.IsAtMost100000InSize)
         {
-            sum += node.GetSize();
+            sum += directory.GetSize();
         }
 
         return sum;
+    }
+
+    private long GetSmallestSizeToDelete(Node node)
+    {
+        var sum = long.MaxValue;
+        if (node.GetSize() >= MinimumSpaceToDelete)
+        {
+            sum = node.GetSize();
+        }
+
+        return sum;
+    }
+
+    public long GetSizeForTheSmallestDirectoryToDeleteBeforeUpdate()
+    {
+        var allBelowMinimumSize = new HashSet<long>();
+
+        Directory.Traverse(_rootDirectory, directory => allBelowMinimumSize.Add(GetSmallestSizeToDelete(directory)));
+
+        return allBelowMinimumSize.Min();
     }
 }
