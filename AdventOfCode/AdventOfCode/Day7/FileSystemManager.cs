@@ -12,7 +12,7 @@ public class FileSystemManager
     private const string ChangeDirectoryCommand = "cd ";
     private const string ListCommand = "ls";
     private const string RootName = "/";
-    private const string MoveUpDirectoryCommand = "..";
+    private const string GoToParentDirectoryCommand = "..";
 
     public long TotalUsedSpace => _rootDirectory.GetSize();
     private long UnusedSpace => 70000000L - TotalUsedSpace;
@@ -22,56 +22,60 @@ public class FileSystemManager
 
     public void PopulateDirectories(string inputData)
     {
-        var data = inputData.Split(CommandPrefix, StringSplitOptions.RemoveEmptyEntries);
+        var terminalOutputAsArray = inputData.Split(CommandPrefix, StringSplitOptions.RemoveEmptyEntries);
         Directory currentDirectory = null;
-        foreach (var terminalOutput in data)
+        foreach (var terminalOutput in terminalOutputAsArray)
         {
-            var output = Normalize(terminalOutput);
+            var normalizedTerminalOutput = NormalizeOutput(terminalOutput);
 
-            ChangeDirectory(output, ref currentDirectory);
+            ChangeDirectory(normalizedTerminalOutput, ref currentDirectory);
 
-            if (!output.StartsWith(ListCommand))
+            if (!normalizedTerminalOutput.StartsWith(ListCommand))
             {
                 continue;
             }
 
-            var names = output.Split(";").Where(o => !o.Equals(ListCommand));
-            foreach (var name in names)
+            CreateFilesAndDirectories(normalizedTerminalOutput, ref currentDirectory);
+        }
+    }
+
+    private static void CreateFilesAndDirectories(string terminalOutput, ref Directory currentDirectory)
+    {
+        var outputNames = terminalOutput.Split(";").Where(o => !o.Equals(ListCommand));
+        foreach (var nameOutput in outputNames)
+        {
+            if (nameOutput.StartsWith(DirectoryPrefix))
             {
-                if (name.StartsWith(DirectoryPrefix))
-                {
-                    var directoryName = GetDirectoryName(name);
-                    var directory = new Directory(directoryName, currentDirectory, new Dictionary<string, Node>());
-                    currentDirectory.Children.Add(directory.Name, directory);
-                }
-                else
-                {
-                    var file = GetFile(name);
-                    currentDirectory.Children.Add(file.Name, file);
-                }
+                var directory = Directory.Create(nameOutput, currentDirectory);
+                currentDirectory.Children.Add(directory.Name, directory);
+            }
+            else
+            {
+                var file = File.Create(nameOutput);
+                currentDirectory.Children.Add(file.Name, file);
             }
         }
     }
 
-    private void ChangeDirectory(string output, ref Directory currentDirectory)
+    private void ChangeDirectory(string terminalOutput, ref Directory currentDirectory)
     {
-        if (output.EndsWith(RootName))
-        {
-            var directoryName = GetDirectoryName(output);
-            var directory = new Directory(directoryName, null, new Dictionary<string, Node>());
-            _rootDirectory = directory;
-            currentDirectory = _rootDirectory;
-        }
-
-        if (!output.StartsWith(ChangeDirectoryCommand))
+        if (!terminalOutput.StartsWith(ChangeDirectoryCommand))
         {
             return;
         }
 
-        var directoryToChangeTo = output.Split(" ").Last();
-        if (directoryToChangeTo.Equals(MoveUpDirectoryCommand))
+        if (terminalOutput.EndsWith(RootName))
+        {
+            _rootDirectory = Directory.Create(RootName);
+            currentDirectory = _rootDirectory;
+            return;
+        }
+
+        var directoryToChangeTo = terminalOutput.Split(" ").Last();
+        if (directoryToChangeTo.Equals(GoToParentDirectoryCommand))
         {
             currentDirectory = currentDirectory?.Parent;
+            return;
         }
 
         if (currentDirectory?.Children.TryGetValue(directoryToChangeTo, out var node) ?? false)
@@ -80,55 +84,19 @@ public class FileSystemManager
         }
     }
 
-    private static File GetFile(string name)
-    {
-        var fileProperties = name.Split(" ");
-        var size = long.Parse(fileProperties[0]);
-        var fileName = fileProperties[1];
-        return new File(fileName, size);
-    }
-
-    private static string Normalize(string terminalOutput)
+    private static string NormalizeOutput(string terminalOutput)
     {
         return terminalOutput.ReplaceLineEndings(";").TrimEnd(';');
-    }
-
-    private static string GetDirectoryName(string output)
-    {
-        var directoryName = output
-            .Split(" ")
-            .Last();
-        return directoryName;
     }
 
     public long CalculateTotalSumOfDirectoriesWithATotalSizeOfAtMost100000()
     {
         var sum = 0L;
 
-        Directory.Traverse(_rootDirectory, directory => sum += GetSizeForDirectoriesBelow100000InSize(directory));
-
-        return sum;
-    }
-
-
-    private static long GetSizeForDirectoriesBelow100000InSize(Directory directory)
-    {
-        var sum = 0L;
-        if (directory.IsAtMost100000InSize)
+        Directory.Traverse(_rootDirectory, directory =>
         {
-            sum += directory.GetSize();
-        }
-
-        return sum;
-    }
-
-    private long GetSmallestSizeToDelete(Node node)
-    {
-        var sum = long.MaxValue;
-        if (node.GetSize() >= MinimumSpaceToDelete)
-        {
-            sum = node.GetSize();
-        }
+            sum += directory.IsLessThanOrEqual100000InSize ? directory.GetSize() : 0;
+        });
 
         return sum;
     }
@@ -137,7 +105,13 @@ public class FileSystemManager
     {
         var allBelowMinimumSize = new HashSet<long>();
 
-        Directory.Traverse(_rootDirectory, directory => allBelowMinimumSize.Add(GetSmallestSizeToDelete(directory)));
+        Directory.Traverse(_rootDirectory, directory =>
+        {
+            if (directory.GetSize() >= MinimumSpaceToDelete)
+            {
+                allBelowMinimumSize.Add(directory.GetSize());
+            }
+        });
 
         return allBelowMinimumSize.Min();
     }

@@ -6,20 +6,25 @@ namespace AdventOfCode.Day7;
 
 public class Directory : Node
 {
-    private const long MaxSize = 100000;
     private bool IsRoot { get; }
     public Directory Parent { get; }
     public Dictionary<string, Node> Children { get; }
-    public bool IsAtMost100000InSize => GetSize() <= MaxSize;
+    public bool IsLessThanOrEqual100000InSize => GetSize() <= 100000L;
 
-    public Directory(string name, Directory parent, Dictionary<string, Node> children) : base(name)
+    private Directory(string name, Directory parent = null) : base(name)
     {
-        Children = children;
+        Children = new Dictionary<string, Node>();
         IsRoot = Name.Equals("/");
         if (!IsRoot)
         {
             Parent = parent ?? throw new ArgumentNullException(nameof(parent));
         }
+    }
+
+    public static Directory Create(string name, Directory parent = null)
+    {
+        var directoryName = name.Split(" ").Last();
+        return new Directory(directoryName, parent);
     }
 
     public override long GetSize()
@@ -33,15 +38,14 @@ public class Directory : Node
         return $"Kind: {kind}, Name: {Name}, Size: {GetSize()}";
     }
 
-    public static void Traverse(Directory directory, Visitor visitor)
+    public static void Traverse(Directory directory, DirectoryAction action)
     {
-        visitor(directory);
+        action(directory);
         foreach (var child in directory.Children.Values.Where(n => n is Directory))
         {
-            var dir = child as Directory;
-            Traverse(dir, visitor);
+            Traverse(child as Directory, action);
         }
     }
 }
 
-public delegate void Visitor(Directory directory);
+public delegate void DirectoryAction(Directory directory);

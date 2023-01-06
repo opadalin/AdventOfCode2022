@@ -5,10 +5,18 @@ public class File : Node
     private readonly long _size;
     private readonly string _fileType;
 
-    public File(string name, long size) : base(name)
+    private File(string name, long size) : base(name)
     {
         _size = size;
         _fileType = GetFileType();
+    }
+
+    public static File Create(string terminalOutput)
+    {
+        var fileProperties = terminalOutput.Split(" ");
+        var size = long.Parse(fileProperties[0]);
+        var fileName = fileProperties[1];
+        return new File(fileName, size);
     }
 
     public override long GetSize()
