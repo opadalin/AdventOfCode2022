@@ -35,7 +35,7 @@ public class TreetopTreeHouseService
         Console.Write(gridString);
         var numberOfTreesVisibleAroundTheEdge = GetNumberOfTreesVisibleAroundTheEdge(treeMatrix);
 
-        var x = Get(treeMatrix);
+        //var x = Get(treeMatrix);
 
         return numberOfTreesVisibleAroundTheEdge;
     }

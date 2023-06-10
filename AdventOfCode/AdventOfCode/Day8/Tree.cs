@@ -31,7 +31,7 @@ public class Tree
 
     public override string ToString()
     {
-        return $"Tree with {Height.ToString()} in height";
+        return $"{Height.ToString()}";
     }
 }
 
